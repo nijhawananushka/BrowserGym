@@ -55,7 +55,7 @@ does not support vision. Disabling use_screenshot."""
 
         # calling this just in case, but it should be called by benchmark before the first step
         self.reset(seed=None)
-
+        self.set_logger()
         if kwargs:
             warn(f"Warning: Not using any of these arguments when initiating the agent: {kwargs}")
 
