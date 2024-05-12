@@ -136,6 +136,7 @@ does not support vision. Disabling use_screenshot."""
         obs["dom_txt"] = flatten_dom_to_str(
             obs["dom_object"],
             with_visible=self.flags.extract_visible_tag,
+            extra_properties=obs["extra_element_properties"],
             with_center_coords=self.flags.extract_coords == "center",
             with_bounding_box_coords=self.flags.extract_coords == "box",
             filter_visible_only=self.flags.extract_visible_elements_only,
@@ -144,6 +145,7 @@ does not support vision. Disabling use_screenshot."""
         obs["axtree_txt"] = flatten_axtree_to_str(
             obs["axtree_object"],
             with_visible=self.flags.extract_visible_tag,
+            extra_properties=obs["extra_element_properties"],
             with_center_coords=self.flags.extract_coords == "center",
             with_bounding_box_coords=self.flags.extract_coords == "box",
             filter_visible_only=self.flags.extract_visible_elements_only,

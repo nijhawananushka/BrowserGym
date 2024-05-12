@@ -3,3 +3,5 @@ __pycache__/
 *.py[cod]
 demo_agent/results/*
 browsergym.egg-info/*
+results/*
+.vscode/*

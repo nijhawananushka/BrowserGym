@@ -46,11 +46,11 @@ def get_elem_by_bid(
 
 
 def highlight_by_box(
-    page: playwright.sync_api.Page, box: dict, color: Literal["blue", "red"] = "blue"
+    page: playwright.sync_api.Page, box: dict, color: Literal["blue", "red", "pink"] = "blue"
 ):
     """Highlights the target element based on its bounding box attributes."""
 
-    assert color in ("blue", "red")
+    assert color in ("blue", "red", "pink")
 
     if box:
         left, top, width, height = box["x"], box["y"], box["width"], box["height"]
@@ -247,6 +247,7 @@ def add_demo_mode_effects(
     """Adds visual effects to the target element"""
     box = elem.bounding_box()
     # box = extract_bounds_cdp(page, bid)
+    color = "pink"
     if box:
         center_x, center_y = box["x"] + box["width"] / 2, box["y"] + box["height"] / 2
         is_top_element = check_for_overlay(page, bid, elem, box)

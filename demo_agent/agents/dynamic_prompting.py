@@ -47,7 +47,7 @@ class Flags:
     max_prompt_tokens: int = None
     extract_visible_tag: bool = False
     extract_coords: Literal["False", "center", "box"] = "False"
-    extract_visible_elements_only: bool = False
+    extract_visible_elements_only: bool = True
     demo_mode: Literal["off", "default", "only_visible_elements"] = "off"
 
     def copy(self):

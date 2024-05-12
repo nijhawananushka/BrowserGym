@@ -110,7 +110,7 @@ class HighLevelActionSet(AbstractActionSet):
         ],
         custom_actions: Optional[list[callable]] = None,
         multiaction: bool = True,
-        demo_mode: Literal["off", "default", "all_blue", "only_visible_elements"] = "off",
+        demo_mode: Literal["off", "default", "all_blue", "only_visible_elements"] = "only_visible_elements",
         strict: bool = False,
     ):
         super().__init__(strict)
