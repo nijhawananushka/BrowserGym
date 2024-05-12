@@ -4,13 +4,13 @@ import traceback
 from warnings import warn
 from utils.obs import flatten_axtree_to_str, flatten_dom_to_str
 from langchain.schema import HumanMessage, SystemMessage
-
 from agents.base import Agent
 from agents import dynamic_prompting
 from agents.prompt_utils import prune_html
 from utils.llm_utils import ParseError, retry
 from utils.chat_api import ChatModelArgs
-
+import logging
+import datetime
 
 @dataclass
 class GenericAgentArgs:
@@ -38,7 +38,6 @@ class GenericAgent(Agent):
         self.chat_llm = chat_model_args.make_chat_model()
         self.chat_model_args = chat_model_args
         self.max_retry = max_retry
-
         if flags is None:
             self.flags = dynamic_prompting.Flags()
         else:
@@ -59,6 +58,19 @@ does not support vision. Disabling use_screenshot."""
 
         if kwargs:
             warn(f"Warning: Not using any of these arguments when initiating the agent: {kwargs}")
+
+    def set_logger(self):
+        logger = logging.getLogger('example_logger')
+        logger.setLevel(logging.DEBUG)
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        file_handler = logging.FileHandler(f'log_{timestamp}.log')
+        file_handler.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+
+        logger.propagate = False
+        self.logger = logger
 
     def get_action(self, obs):
         if not "pruned_html" in obs:
@@ -89,6 +101,7 @@ does not support vision. Disabling use_screenshot."""
             model_name=self.chat_model_args.model_name,
         )
 
+        self.logger.debug(prompt)
         chat_messages = [
             SystemMessage(content=dynamic_prompting.SystemPrompt().prompt),
             HumanMessage(content=prompt),
@@ -105,7 +118,7 @@ does not support vision. Disabling use_screenshot."""
             return ans_dict, True, ""
 
         try:
-            ans_dict = retry(self.chat_llm, chat_messages, n_retry=self.max_retry, parser=parser)
+            ans_dict = retry(self.chat_llm, chat_messages, n_retry=self.max_retry, parser=parser, logger=self.logger)
             # inferring the number of retries, TODO: make this less hacky
             ans_dict["n_retry"] = (len(chat_messages) - 3) / 2
         except ValueError as e:

@@ -39,6 +39,7 @@ def retry(
     log=True,
     min_retry_wait_time=60,
     rate_limit_max_wait_time=60 * 30,
+    logger = None
 ):
     """Retry querying the chat models with the response from the parser until it
     returns a valid value.
@@ -74,6 +75,9 @@ def retry(
     while tries < n_retry and rate_limit_total_delay < rate_limit_max_wait_time:
         try:
             answer = chat.invoke(messages)
+            if logger:
+                logger.debug("Answer: ")
+                logger.debug(answer)
         except RateLimitError as e:
             wait_time = _extract_wait_time(e.args[0], min_retry_wait_time)
             logging.warning(f"RateLimitError, waiting {wait_time}s before retrying.")
