@@ -63,7 +63,7 @@ does not support vision. Disabling use_screenshot."""
         logger = logging.getLogger('example_logger')
         logger.setLevel(logging.DEBUG)
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        file_handler = logging.FileHandler(f'log_{timestamp}.log')
+        file_handler = logging.FileHandler(f'logs/log_{timestamp}.log')
         file_handler.setLevel(logging.DEBUG)
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         file_handler.setFormatter(formatter)
