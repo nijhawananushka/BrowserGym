@@ -21,10 +21,7 @@ from PIL import Image
 from tqdm import tqdm
 
 import gymnasium as gym
-import browsergym.miniwob  # important, registers "browsergym/miniwob.*" gym environment
-import browsergym.workarena  # important, registers "browsergym/workarena.*" gym environment
-import browsergym.webarena  # important, registers "browsergym/webarena.*" gym environment
-from browsergym.core.chat import Chat
+from core.chat import Chat
 
 from agents import AgentArgs
 from agents.base import Agent

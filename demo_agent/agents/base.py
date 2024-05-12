@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from browsergym.utils.obs import flatten_axtree_to_str, flatten_dom_to_str
+from utils.obs import flatten_axtree_to_str, flatten_dom_to_str
 from agents.prompt_utils import prune_html
 
 

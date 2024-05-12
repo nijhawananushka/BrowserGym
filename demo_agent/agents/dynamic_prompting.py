@@ -9,9 +9,9 @@ from textwrap import dedent
 from typing import Literal
 from warnings import warn
 
-from browsergym.core.action.base import AbstractActionSet
-from browsergym.core.action.highlevel import HighLevelActionSet
-from browsergym.core.action.python import PythonActionSet
+from core.action.base import AbstractActionSet
+from core.action.highlevel import HighLevelActionSet
+from core.action.python import PythonActionSet
 
 from utils.llm_utils import ParseError
 from utils.llm_utils import (

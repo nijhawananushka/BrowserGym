@@ -47,7 +47,7 @@ def parse_args():
     parser.add_argument(
         "--use_ax_tree",
         type=str2bool,
-        default=True,
+        default=False,
         help="Use AX tree in the agent's observation space.",
     )
     parser.add_argument(
@@ -86,7 +86,7 @@ def main():
     args = parse_args()
 
     task_kwargs = {
-        "viewport": {"width": 1500, "height": 1280},
+        "viewport": {"width": 1280, "height": 720},
         "slow_mo": args.slow_mo,
     }
 

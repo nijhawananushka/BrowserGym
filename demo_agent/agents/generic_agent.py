@@ -2,7 +2,7 @@ from collections import defaultdict
 from dataclasses import asdict, dataclass, field
 import traceback
 from warnings import warn
-from browsergym.utils.obs import flatten_axtree_to_str, flatten_dom_to_str
+from utils.obs import flatten_axtree_to_str, flatten_dom_to_str
 from langchain.schema import HumanMessage, SystemMessage
 
 from agents.base import Agent
