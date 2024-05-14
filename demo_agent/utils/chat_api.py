@@ -106,6 +106,8 @@ class ChatModelArgs:
 
     def has_vision(self):
         # TODO make sure to upgrade this as we add more models
+        if self.model_name == "openai/gpt-4o":
+            return True
         return "vision" in self.model_name
 
 

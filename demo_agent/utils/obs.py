@@ -58,10 +58,6 @@ def flatten_dom_to_str(
 
         def dfs(node_idx: int, parent_node_skipped: bool) -> str:
 
-            # https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
-            # https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeName
-            # https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeValue
-
             node_type = nodes["nodeType"][node_idx]
             node_name = to_string(nodes["nodeName"][node_idx])
             node_value = to_string(nodes["nodeValue"][node_idx])

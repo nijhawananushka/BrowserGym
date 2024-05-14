@@ -48,7 +48,7 @@ class BrowserEnv(gym.Env, ABC):
         headless: bool = True,
         wait_for_user_message: bool = False,
         resizeable_window: bool = False,
-        record_video_dir: Optional[str] = None,
+        record_video_dir: Optional[str] = "videos/",
         pw_chromium_kwargs: dict = {},
         pw_context_kwargs: dict = {},
         # agent-related arguments

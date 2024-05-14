@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument(
         "--model_name",
         type=str,
-        default="openai/gpt-4-vision-preview",
+        default="openai/gpt-4o",
         help="Model name for the chat model.",
     )
     parser.add_argument(
@@ -62,7 +62,7 @@ def parse_args():
     parser.add_argument(
         "--action_space",
         type=str,
-        default="bid",
+        default="bid+coord+nav",
         choices=["python", "bid", "coord", "bid+coord", "bid+nav", "coord+nav", "bid+coord+nav"],
         help="",
     )

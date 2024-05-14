@@ -39,16 +39,16 @@ class Flags:
     multi_actions: bool = False
     action_space: Literal[
         "python", "bid", "coord", "bid+coord", "bid+nav", "coord+nav", "bid+coord+nav"
-    ] = "bid"
+    ] = "bid+coord+nav"
     is_strict: bool = False
     # This flag will be automatically disabled `if not chat_model_args.has_vision()`
     use_screenshot: bool = True
     enable_chat: bool = False
     max_prompt_tokens: int = None
-    extract_visible_tag: bool = False
-    extract_coords: Literal["False", "center", "box"] = "False"
+    extract_visible_tag: bool = True
+    extract_coords: Literal["False", "center", "box"] = "center"
     extract_visible_elements_only: bool = True
-    demo_mode: Literal["off", "default", "only_visible_elements"] = "off"
+    demo_mode: Literal["off", "default", "only_visible_elements"] = "only_visible_elements"
 
     def copy(self):
         return deepcopy(self)

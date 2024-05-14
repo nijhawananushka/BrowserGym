@@ -21,6 +21,8 @@ import io
 import base64
 from PIL import Image
 from openai import RateLimitError
+from openai import OpenAI
+import os
 
 
 def _extract_wait_time(error_message, min_retry_wait_time=60):
@@ -72,9 +74,33 @@ def retry(
     """
     tries = 0
     rate_limit_total_delay = 0
+    client = OpenAI(
+        api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
+    )
     while tries < n_retry and rate_limit_total_delay < rate_limit_max_wait_time:
         try:
-            answer = chat.invoke(messages)
+            # answer = chat.invoke(messages)
+            new_messages = []
+            for message in messages:
+                if hasattr(message, "type"):
+                    if message.type == "human":
+                        for content in message.content:
+                            if content["type"] == "image_url":
+                                new_image = {"url": content["image_url"], "detail": "high"}
+                                content["image_url"] = new_image
+                    message = {
+                        "role": "system" if message.type == "system" else "user",
+                        "content": message.content
+                    }
+                new_messages.append(message)
+
+            answer = client.chat.completions.create(
+                model="gpt-4o",
+                messages=new_messages,
+                temperature=0.1,
+                max_tokens=2000
+            )
+
             if logger:
                 logger.debug("Answer: ")
                 logger.debug(answer)
@@ -89,7 +115,7 @@ def retry(
                 )
                 raise
             continue
-
+        answer = answer.choices[0].message
         messages.append(answer)
 
         value, valid, retry_message = parser(answer.content)
@@ -179,6 +205,8 @@ def truncate_tokens(text, max_tokens=8000, start=0, model_name="gpt-4"):
 @cache
 def get_tokenizer(model_name="openai/gpt-4"):
     if model_name.startswith("openai"):
+        if model_name == "openai/gpt-4o":
+            model_name = "openai/gpt-4"
         return tiktoken.encoding_for_model(model_name.split("/")[-1])
     else:
         return AutoTokenizer.from_pretrained(model_name)
